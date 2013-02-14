@@ -4,7 +4,6 @@ available from http://www.fec.gov/disclosurep/PDownload.do"""
 
 import fileinput
 import csv
-from itertools import islice
 
 total = 0
 minimum = 0
@@ -14,7 +13,7 @@ sum_squares = 0
 candidates = {}
 contributions = []
 
-for row in islice(csv.reader(fileinput.input()),None):
+for row in csv.reader(fileinput.input()):
     if not fileinput.isfirstline():
         ## initialize minmium value
         if total == 0: minimum = float(row[9])
