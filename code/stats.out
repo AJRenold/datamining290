@@ -1,0 +1,149 @@
+Total: 146858886.14
+Minimum: -30000.0
+Maximum: 30000.0
+Mean: 168.685431492
+Median: 50.0
+Standard Deviation: 438.307269816
+Candidates: ['Huntsman, Jon', 'Cain, Herman', 'Gingrich, Newt', 'Obama, Barack', 'Johnson, Gary Earl', 'Stein, Jill', 'Romney, Mitt', 'Bachmann, Michele', 'McCotter, Thaddeus G', 'Santorum, Rick', "Roemer, Charles E. 'Buddy' III", 'Perry, Rick', 'Paul, Ron', 'Pawlenty, Timothy']
+Min-max normalized values: [0.5416666666666666, 0.5008333333333334, 0.5041666666666667, 0.5005833333333334, 0.5001333333333333, 0.5016666666666667, 0.5003166666666666]
+z-score normalized values: [5.318904633926816, -0.2707813437394347, 0.1855195523965858, -0.30500391094963625, -0.366604531927999, -0.15670611970542958, -0.34150798264051785]
+Candidate: Huntsman, Jon
+Total: 405345.0
+Minimum: -2500.0
+Maximum: 5000.0
+Mean: 830.625
+Median: 250.0
+Standard Deviation: 996.425040545
+mean normalized: 0.51384375
+mean as normalized z_score: 1.51021809149
+
+Candidate: Cain, Herman
+Total: 565445.91
+Minimum: -2500.0
+Maximum: 5000.0
+Mean: 354.289417293
+Median: 250.0
+Standard Deviation: 509.319278485
+mean normalized: 0.505904823622
+mean as normalized z_score: 0.423456325239
+
+Candidate: Gingrich, Newt
+Total: 1233163.51
+Minimum: -5000.0
+Maximum: 5000.0
+Mean: 221.31434135
+Median: 100.0
+Standard Deviation: 597.059794174
+mean normalized: 0.503688572356
+mean as normalized z_score: 0.120073093654
+
+Candidate: Obama, Barack
+Total: 91715283.62
+Minimum: -25800.0
+Maximum: 25800.0
+Mean: 126.626099158
+Median: 50.0
+Standard Deviation: 327.230778768
+mean normalized: 0.502110434986
+mean as normalized z_score: -0.0959585551739
+
+Candidate: Johnson, Gary Earl
+Total: 202336.67
+Minimum: 0.88
+Maximum: 2500.0
+Mean: 431.421471215
+Median: 250.0
+Standard Deviation: 626.768728793
+mean normalized: 0.507190357854
+mean as normalized z_score: 0.599433451866
+
+Candidate: Stein, Jill
+Total: 52304.47
+Minimum: -250.0
+Maximum: 2500.0
+Mean: 281.206827957
+Median: 250.0
+Standard Deviation: 369.515983069
+mean normalized: 0.504686780466
+mean as normalized z_score: 0.256718070208
+
+Candidate: Romney, Mitt
+Total: 46012305.74
+Minimum: -30000.0
+Maximum: 30000.0
+Mean: 420.05409708
+Median: 100.0
+Standard Deviation: 784.300755945
+mean normalized: 0.507000901618
+mean as normalized z_score: 0.573498736842
+
+Candidate: Bachmann, Michele
+Total: 358764.02
+Minimum: -1500.0
+Maximum: 5000.0
+Mean: 190.629128587
+Median: 100.0
+Standard Deviation: 330.997099978
+mean normalized: 0.503177152143
+mean as normalized z_score: 0.0500646432451
+
+Candidate: McCotter, Thaddeus G
+Total: 1030.0
+Minimum: 25.0
+Maximum: 500.0
+Mean: 257.5
+Median: 252.5
+Standard Deviation: 168.021575995
+mean normalized: 0.504291666667
+mean as normalized z_score: 0.202630836002
+
+Candidate: Santorum, Rick
+Total: 975543.12
+Minimum: -5000.0
+Maximum: 5000.0
+Mean: 194.758059493
+Median: 100.0
+Standard Deviation: 457.726674238
+mean normalized: 0.503245967658
+mean as normalized z_score: 0.0594848176082
+
+Candidate: Roemer, Charles E. 'Buddy' III
+Total: 38646.17
+Minimum: -100.0
+Maximum: 100.0
+Mean: 57.0844460857
+Median: 50.0
+Standard Deviation: 40.6241024192
+mean normalized: 0.500951407435
+mean as normalized z_score: -0.254618148252
+
+Candidate: Perry, Rick
+Total: 1585080.6
+Minimum: -2500.0
+Maximum: 5000.0
+Mean: 1244.17629513
+Median: 1000.0
+Standard Deviation: 1336.92512482
+mean normalized: 0.520736271586
+mean as normalized z_score: 2.45373722433
+
+Candidate: Paul, Ron
+Total: 2940807.31
+Minimum: -2500.0
+Maximum: 5000.0
+Mean: 155.31886078
+Median: 100.0
+Standard Deviation: 291.421209142
+mean normalized: 0.50258864768
+mean as normalized z_score: -0.0304958909708
+
+Candidate: Pawlenty, Timothy
+Total: 772830.0
+Minimum: -5000.0
+Maximum: 10000.0
+Mean: 1139.86725664
+Median: 2000.0
+Standard Deviation: 2249.06876437
+mean normalized: 0.518997787611
+mean as normalized z_score: 2.21575568562
+
