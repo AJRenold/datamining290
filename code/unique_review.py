@@ -10,6 +10,7 @@ class UniqueReview(MRJob):
 
     def extract_words(self, _, record):
         """Take in a record, filter by type=review, yield <word, review_id>"""
+        i = 0
         if record['type'] == 'review':
             ###
             # TODO: for each word in the review, yield the correct key,value
@@ -17,6 +18,8 @@ class UniqueReview(MRJob):
             # for word in ____:
             #   yield [ ___ , ___ ]
             ##/
+            for word in WORD_RE.findall(record['text']):
+                yield [ word.lower(), record['review_id'] ]
 
     def count_reviews(self, word, review_ids):
         """Count the number of reviews a word has appeared in.  If it is a
@@ -29,6 +32,9 @@ class UniqueReview(MRJob):
         # if ___:
         #     yield [ ___ , ___ ]
         ##/
+        if len(unique_reviews) == 1:
+            yield unique_reviews.pop(), 1 
+        
 
     def count_unique_words(self, review_id, unique_word_counts):
         """Output the number of unique words for a given review_id"""
@@ -36,6 +42,8 @@ class UniqueReview(MRJob):
         # TODO: summarize unique_word_counts and output the result
         # 
         ##/
+        yield review_id, sum(unique_word_counts)
+
 
     def aggregate_max(self, review_id, unique_word_count):
         """Group reviews/counts together by the MAX statistic."""
@@ -44,6 +52,7 @@ class UniqueReview(MRJob):
         # the same reducer:
         # yield ["MAX", [ ___ , ___]]
         ##/
+	yield "MAX", [ unqiue_word_count , review_id ]
 
     def select_max(self, stat, count_review_ids):
         """Given a list of pairs: [count, review_id], select on the pair with
@@ -54,12 +63,24 @@ class UniqueReview(MRJob):
         # number
         #
         #/
+        
+        max_rev = max(count_review_ids)
+
+        yield [ max_rev[1] , max_rev[0] ]
 
     def steps(self):
         """TODO: Document what you expect each mapper and reducer to produce:
         mapper1: <line, record> => <key, value>
         reducer1: <key, [values]>
         mapper2: ...
+
+	extract_words <line, record> => <word, record_id>
+        count_reviews <word, review_ids> => <review_id, 1>
+        count_unique_words <review_id, unique_word_counts> => <review_id, sum(unique_word_counts)>
+        aggregate_max <review_id, unique_word_count> =>
+        select_max <stat, count_review_ids>
+	
+
         """
         return [self.mr(self.extract_words, self.count_reviews),
                 self.mr(reducer=self.count_unique_words),

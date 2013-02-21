@@ -17,6 +17,19 @@ class UserSimilarity(MRJob):
         reducer1: <key, [values]>
         mapper2: ...
         """
+        
+        def extract_user_review(self, _, record):
+            if record['type'] == 'review':
+                yield record['user_id'], record['review_id']
+
+        def user_reviews(self, user_id, review_ids):
+            reviews = []
+            for review in review_ids:
+                reviews.append(review)
+
+            yield user_id, reviews
+        
+
         return [self.mr(mapper=self.mapper1, reducer=self.reducer1),
                 self.mr(mapper=...)]
 
