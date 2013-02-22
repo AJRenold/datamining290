@@ -33,7 +33,8 @@ class UniqueReview(MRJob):
         #     yield [ ___ , ___ ]
         ##/
         if len(unique_reviews) == 1:
-            yield unique_reviews.pop(), 1 
+            review = unique_reviews.pop()
+            yield review, 1 
         
 
     def count_unique_words(self, review_id, unique_word_counts):
@@ -52,7 +53,7 @@ class UniqueReview(MRJob):
         # the same reducer:
         # yield ["MAX", [ ___ , ___]]
         ##/
-	yield "MAX", [ unqiue_word_count , review_id ]
+        yield "MAX", [ unique_word_count , review_id ]
 
     def select_max(self, stat, count_review_ids):
         """Given a list of pairs: [count, review_id], select on the pair with
@@ -70,16 +71,12 @@ class UniqueReview(MRJob):
 
     def steps(self):
         """TODO: Document what you expect each mapper and reducer to produce:
-        mapper1: <line, record> => <key, value>
-        reducer1: <key, [values]>
-        mapper2: ...
 
-	extract_words <line, record> => <word, record_id>
-        count_reviews <word, review_ids> => <review_id, 1>
-        count_unique_words <review_id, unique_word_counts> => <review_id, sum(unique_word_counts)>
-        aggregate_max <review_id, unique_word_count> =>
-        select_max <stat, count_review_ids>
-	
+        mapper1: extract_words <line, record> => <word, record_id>
+        reducer1: count_reviews <word, review_ids> => <review_id, 1>
+        reducer2: count_unique_words <review_id, unique_word_counts> => <review_id, sum(unique_word_counts)>
+        mapper3: aggregate_max <review_id, unique_word_count> => <"MAX", [ unique_word_count, review_id ]>
+        reducer3: select_max <stat, count_review_ids> => <review_id, unique_word_count>
 
         """
         return [self.mr(self.extract_words, self.count_reviews),
