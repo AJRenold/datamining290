@@ -1,0 +1,4 @@
+Gini Index: 0.291474153115
+Gini Index after split: 0.262223468115
+Best split on contributions attribute: $100.0 at  location: 652956
+Gini after best split: 0.25989916064
