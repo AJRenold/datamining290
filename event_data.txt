@@ -1,0 +1,71 @@
+Exploring data from the Kaggle.com Event Recommendation Engine Challenge
+
+Found at: https://www.kaggle.com/c/event-recommendation-engine-challenge/data
+
+This is a data mining competition to produce an event recommendation engine which predicts which events a user will be interested in. There are five data files for the competition:
+
+1. train.csv
+2. users.csv
+3. user_friends.csv
+4. events.csv
+5. event_attendees.csv
+
+To better understand each dataset, I used the python library Pandas and read each csv into a DataFrame. I then used the DataFrame.column.describe() and DataFrame.column.value_counts() to explore the data in each csv file. Below I've written an overview and pasted some output from describe() and value_counts()
+
+1. train.csv is training data for a model produced as a solution to the challenge. It has 10237 records. It would be used as a learning data and testing data when developing a solution to the challenge.
+
+2. users.csv is a users table with 38209 records. The Location column has an very interesting distribution with the top 3 values of Medan, Yogyakarta, and Phnom Penh. Other columns that could be valuable wither further analysis were Birthyear, Locale, and Gender.
+
+LOCALE top 5 values
+en_US    17073
+id_ID    11817
+es_LA     1999
+en_GB     1745
+es_ES      981
+
+BIRTHYEAR top 5 values
+1993      3915
+1992      3604
+1994      3446
+1990      3016
+1991      2976
+*None has 1492 values 
+
+LOCATION
+Medan  Indonesia                     4509
+Yogyakarta                           3092
+Phnom Penh                           2169
+Los Angeles  California              1555
+*None                                1475
+
+GENDER
+count     38100
+unique        2
+top        male
+freq      23242
+
+3. user_friends.csv is a table of users and a list of the user's friends. I sampled the data to find user_ids in friends list, which would show users might be friends with other users and found no examples. Using describe() and value_counts() was not effect with Friends because each value was stored as a list of user_ids. I used collections.Counter to count the values. Interesting I found that none of the top 5 user_ids appeared in the users.csv file, suggesting my conclusion is correct.
+
+FRIENDS top 5 values
+[('119202013', 339), ('2236096129', 162), ('3260725213', 158), ('2928879570', 158), ('726297374', 154)]
+* had to use collections.Counter to find this because friends were stored as lists of user_ids
+
+
+4. events.csv is a table of events. Interestingly the events table has 3137972 events, significantly more than the number of records in the users table. The events table has very granular location information, with the Country, State, City, ZIp, Lat, Lng values available for events. Only 1806092 events have lat and lng values. events also has many columns called c_1, c_2, c_3, etc that relate to n-gram of words in the event description.
+
+CITY top 5 values
+New York         43009
+Toronto          32023
+Los Angeles      27831
+Chicago          21390
+London           21187
+
+5. event_attendees.csv is a table of 24144 event records with lists of invited users respond yes, no, or maybe to the event. I sampled a few of the user_ids and not all are found in the Users Table.
+
+Conclusion - What Questions I might answer with this data - 
+
+1.If I were competing in this competition, I would use events, event_attendees and users to try to pin point each user location. Since the users table only specifies a City, I believe I could user the event_attendees and events tables to determine a best guess zip for users based on their decision of yes or mabye to attend events. From that a basic prediction model could be formed to show events to users based on the distance an event is from a user. 
+
+2.Additionally I could use each users age and create an average age of event invitees and attendees to determine what age range of users are attending events. Based on this I could include the age range of users in my model for recommending events to users. 
+
+3.Finally, because many user_ids appear frequently in the user_friends Friends columns, I would analyze users' friend list and look for overlapping friend lists when users are invited to an event. The logic of this would be, if two users are inivited to an event and they have an overlapping friends list (and if friends appear in the events list) they would be more likely to attend the event.
