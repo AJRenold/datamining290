@@ -1,0 +1,38 @@
+AJ Renold
+
+Question 8 Put the following steps for building a classifier in the correct chronological order:
+
+My answer:
+1. Prepare Training Data
+5. Set aside hold-out set
+2. teach classifier
+7. verification with testing data
+6. save model parameters
+4. input unlabeled new data into model
+3. output guesses on new data
+
+Correct answer:
+1.
+5.
+2.
+6. save model parameters
+7. verification with testing data
+4.
+3.
+
+Explaination for the difference between answers: I interpreted the steps differently as after the training
+or teaching of a classifier, you would save the model parameters, only once you've verified the model. The
+correct answer suggests that you must save model parameters before you can verify the model with testing
+data.
+
+Question 11 Fixing gradient descent
+
+My answer: The error function is increasing with each iterations meaning the increment in slope for each
+iteration is changing in the wrong direction. You should revers the change in slope function so that the 
+error decreases with each step, indicating a better fit.
+
+Correct answer: My answer might be pointing out a bug in the implementation, but the prompt indicates that
+we should assume there are no bugs in the implementation. If there are no bugs, then the correct answer is
+that the size of the step function is too large and that the program is stepping over the solution and
+finding a larger and larger error. This can be vizualized as the error point bouncing out of the parabola 
+graphing the error function.
