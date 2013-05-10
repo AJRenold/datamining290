@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+    <meta charset="utf-8">
+		<title>Yelp Category Words</title>
+    <meta name="author" content="AJ Renold">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div id="header">
+      <h1>Top Words by TF IDF per Business Category</h1>
+    </div>
+
+    <select id="biz_category">
+    </select>
+
+    <div id="Graph">
+    </div>
+
+    <script type="text/javascript">
+
+        var data; // a global
+
+        d3.json("category_top_tfidfs.json", function(error, json) {
+            if (error) return console.warn(error);
+            data = json;
+            add_menu_options(data);
+            create_graph(data);
+
+        });
+
+        function add_menu_options(data){
+            for (var key in data) {
+                $("#biz_category").append('<option value="'+key+'">'+key+'</option>');
+            }
+            $('option[value=Restaurants]').attr('selected', 'selected');
+        }
+
+        function change() {
+            this.options[this.selectedIndex].__data__
+        }
+
+        function create_graph(datas) {
+
+            console.log(datas);
+
+            var category = $("#biz_category").val();
+            console.log(category);
+
+            var w = 800;
+            var h = 400;
+            var padding = 50;
+            var barPadding = 2;
+            var chartWidth = w - (padding*2)
+
+            var yScale = d3.scale.linear()
+                            .domain([0, d3.max(datas[category], function(d) { return d[0]; })])
+                            .range([h - padding, padding]);
+
+            var svg = d3.select("#Graph")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+
+            var rects = svg.selectAll("rect")
+                            .data(datas[category])
+                            .enter()
+                            .append("rect")
+                            .attr("x", function(d, i) {
+                                return padding + (i * (chartWidth / datas[category].length));
+                            })
+                            .attr("y", function(d) {
+                                return yScale(d[0]);
+                            })
+                            .attr("width", chartWidth / datas[category].length - barPadding )
+                            .attr("height", function(d) {
+                                return h - yScale(d[0]) - padding;
+                            })
+                            .attr("fill", "red");
+
+            var text = svg.selectAll("text")
+                            .data(datas[category])
+                            .enter()
+                            .append("text")
+                            .text(function(d){
+                                return d[1];
+                            })
+                            .attr("transform", function(d, i) {
+                                x = padding + (i * (chartWidth / datas[category].length)) + 18
+                                y = h - (padding-5)
+                                return "translate("+x+","+y+") rotate(-45) "; 
+                            })
+                            .attr("text-anchor","end")
+                            .attr("font-family", "sans-serif")
+                            .attr("font-size", "12px")
+                            .attr("fill", "black");
+
+            var yAxis = d3.svg.axis()
+                            .scale(yScale)
+                            .orient("left")
+                            .ticks(5);
+
+            var yTicks = svg.append("g")
+                            .attr("class", "axis")
+                            .attr("transform", "translate(" + padding + ",0)")
+                            .call(yAxis);
+
+            svg.append("text")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "14px")
+                .attr("text-anchor", "middle")
+                .attr("transform", "translate("+ (padding/4) +","+(h/2)+")rotate(-90)")
+                .text("TF IDF");
+
+            d3.selectAll("#biz_category")
+            .on("change", redraw );
+
+        function redraw() {
+
+            var category = $("#biz_category").val();
+            console.log(category);
+
+            var yScale = d3.scale.linear()
+                            .domain([0, d3.max(datas[category], function(d) { return d[0]; })])
+                            .range([h - padding, padding]);
+
+            var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(5);
+
+            yTicks.call(yAxis);
+
+            rects.data(datas[category])
+                .transition().duration(2000).delay(20)
+                .attr("x", function(d, i) {
+                    return padding + (i * (chartWidth / datas[category].length));
+                })
+                .attr("y", function(d) {
+                    return yScale(d[0]);
+                })
+                .attr("width", chartWidth / datas[category].length - barPadding )
+                .attr("height", function(d) {
+                    return h - yScale(d[0]) - padding;
+                })
+                .attr("fill", "red");
+
+            text.data(datas[category])
+                .transition().duration(2000).delay(200)
+                .text(function(d){
+                    return d[1];
+                })
+                .attr("transform", function(d, i) {
+                                x = padding + (i * (chartWidth / datas[category].length)) + 18
+                                y = h - (padding-5)
+                                return "translate("+x+","+y+") rotate(-45) "; 
+                })
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "12px")
+                .attr("fill", "black");
+
+            }
+        }
+
+    </script>
+
+  </body>
+</html>
+
